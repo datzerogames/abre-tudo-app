@@ -4,88 +4,88 @@
     <!-- Base do app. A cor escolhida pelo usuário é aplicada por cima (ver Tema.kt). -->
     <style name="Base_AbreTudo" parent="Theme.Material3.DayNight.NoActionBar" />
 
-    <!-- As 12 cores. Cada uma troca só a cor principal; o modo claro/escuro vem do tema base. -->
-    <style name="Cor_AzulOceano">
-        <item name="colorPrimary">#1565C0</item>
+    <!-- As 12 cores com nome. Cada uma troca só a cor principal; o modo claro/escuro vem do tema base. -->
+    <style name="Cor_TintaLaranja">
+        <item name="colorPrimary">#E8590C</item>
         <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorPrimaryContainer">#1565C0</item>
+        <item name="colorPrimaryContainer">#E8590C</item>
         <item name="colorOnPrimaryContainer">#FFFFFF</item>
     </style>
 
-    <style name="Cor_VerdeFloresta">
-        <item name="colorPrimary">#2E7D32</item>
+    <style name="Cor_CanetaAzul">
+        <item name="colorPrimary">#1E4D9B</item>
         <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorPrimaryContainer">#2E7D32</item>
+        <item name="colorPrimaryContainer">#1E4D9B</item>
         <item name="colorOnPrimaryContainer">#FFFFFF</item>
     </style>
 
-    <style name="Cor_VermelhoCereja">
-        <item name="colorPrimary">#C62828</item>
+    <style name="Cor_CarimboRoxo">
+        <item name="colorPrimary">#6B3FA0</item>
         <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorPrimaryContainer">#C62828</item>
+        <item name="colorPrimaryContainer">#6B3FA0</item>
         <item name="colorOnPrimaryContainer">#FFFFFF</item>
     </style>
 
-    <style name="Cor_RoxoAmetista">
-        <item name="colorPrimary">#6A1B9A</item>
+    <style name="Cor_ClipeTurquesa">
+        <item name="colorPrimary">#17807E</item>
         <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorPrimaryContainer">#6A1B9A</item>
+        <item name="colorPrimaryContainer">#17807E</item>
         <item name="colorOnPrimaryContainer">#FFFFFF</item>
     </style>
 
-    <style name="Cor_LaranjaPorDoSol">
-        <item name="colorPrimary">#E65100</item>
+    <style name="Cor_EnvelopePardo">
+        <item name="colorPrimary">#1F5E6B</item>
         <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorPrimaryContainer">#E65100</item>
+        <item name="colorPrimaryContainer">#1F5E6B</item>
         <item name="colorOnPrimaryContainer">#FFFFFF</item>
     </style>
 
-    <style name="Cor_RosaFlamingo">
-        <item name="colorPrimary">#AD1457</item>
+    <style name="Cor_LapisGrafite">
+        <item name="colorPrimary">#4A5A66</item>
         <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorPrimaryContainer">#AD1457</item>
+        <item name="colorPrimaryContainer">#4A5A66</item>
         <item name="colorOnPrimaryContainer">#FFFFFF</item>
     </style>
 
-    <style name="Cor_Turquesa">
-        <item name="colorPrimary">#00838F</item>
+    <style name="Cor_PapelKraft">
+        <item name="colorPrimary">#6B7A3A</item>
         <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorPrimaryContainer">#00838F</item>
+        <item name="colorPrimaryContainer">#6B7A3A</item>
         <item name="colorOnPrimaryContainer">#FFFFFF</item>
     </style>
 
-    <style name="Cor_Indigo">
-        <item name="colorPrimary">#283593</item>
+    <style name="Cor_LacreCera">
+        <item name="colorPrimary">#7A1F3D</item>
         <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorPrimaryContainer">#283593</item>
+        <item name="colorPrimaryContainer">#7A1F3D</item>
         <item name="colorOnPrimaryContainer">#FFFFFF</item>
     </style>
 
-    <style name="Cor_MarromCafe">
-        <item name="colorPrimary">#5D4037</item>
+    <style name="Cor_MarcaTexto">
+        <item name="colorPrimary">#1B2A4A</item>
         <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorPrimaryContainer">#5D4037</item>
+        <item name="colorPrimaryContainer">#1B2A4A</item>
         <item name="colorOnPrimaryContainer">#FFFFFF</item>
     </style>
 
-    <style name="Cor_VerdeLimao">
-        <item name="colorPrimary">#558B2F</item>
+    <style name="Cor_PlanilhaVerde">
+        <item name="colorPrimary">#1E7A46</item>
         <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorPrimaryContainer">#558B2F</item>
+        <item name="colorPrimaryContainer">#1E7A46</item>
         <item name="colorOnPrimaryContainer">#FFFFFF</item>
     </style>
 
-    <style name="Cor_Grafite">
-        <item name="colorPrimary">#37474F</item>
+    <style name="Cor_PostIt">
+        <item name="colorPrimary">#D9573B</item>
         <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorPrimaryContainer">#37474F</item>
+        <item name="colorPrimaryContainer">#D9573B</item>
         <item name="colorOnPrimaryContainer">#FFFFFF</item>
     </style>
 
-    <style name="Cor_Ambar">
-        <item name="colorPrimary">#B26A00</item>
+    <style name="Cor_SeloDourado">
+        <item name="colorPrimary">#8A6A1F</item>
         <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorPrimaryContainer">#B26A00</item>
+        <item name="colorPrimaryContainer">#8A6A1F</item>
         <item name="colorOnPrimaryContainer">#FFFFFF</item>
     </style>
 

@@ -28,7 +28,6 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:padding="32dp"
-            android:text="Esta pasta está vazia.\nMova arquivos para cá pelo menu de cada arquivo."
             android:textAppearance="?attr/textAppearanceBodyLarge"
             android:textColor="?attr/colorOnSurfaceVariant"
             android:visibility="gone" />

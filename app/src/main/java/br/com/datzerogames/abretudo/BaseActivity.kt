@@ -1,4 +1,4 @@
-package br.abretudo
+package br.com.datzerogames.abretudo
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

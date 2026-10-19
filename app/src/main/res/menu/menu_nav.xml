@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_inicio"
+        android:icon="@android:drawable/ic_menu_today"
+        android:title="@string/aba_inicio" />
+    <item
+        android:id="@+id/nav_arquivos"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="@string/aba_arquivos" />
+    <item
+        android:id="@+id/nav_favoritos"
+        android:icon="@android:drawable/btn_star_big_on"
+        android:title="@string/aba_favoritos" />
+    <item
+        android:id="@+id/nav_ferramentas"
+        android:icon="@android:drawable/ic_menu_manage"
+        android:title="@string/aba_ferramentas" />
+</menu>

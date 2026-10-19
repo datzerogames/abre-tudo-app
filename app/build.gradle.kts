@@ -11,15 +11,15 @@ val assinatura = Properties().apply {
 }
 
 android {
-    namespace = "br.abretudo"
+    namespace = "br.com.datzerogames.abretudo"
     compileSdk = 37
 
     defaultConfig {
         applicationId = "br.com.datzerogames.abretudo"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 36
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 3
+        versionName = "0.3.0"
     }
 
     signingConfigs {
@@ -53,4 +53,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.7.1")
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.recyclerview:recyclerview:1.4.0")
+    implementation("androidx.documentfile:documentfile:1.0.1")
+    // Ferramentas de PDF (juntar, dividir, marca d'água, senha, numerar, organizar).
+    implementation("com.tom-roush:pdfbox-android:2.0.27.0")
 }

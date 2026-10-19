@@ -1,4 +1,4 @@
-package br.abretudo
+package br.com.datzerogames.abretudo
 
 import android.content.Context
 import android.net.Uri
@@ -12,14 +12,14 @@ import java.util.UUID
 
 data class Documento(
     val id: String,
-    val nome: String,
+    var nome: String,
     val arquivo: String,
     val tamanho: Long,
     val tipo: String,
     val adicionadoEm: Long,
+    /** 0 quando o arquivo nunca foi aberto nem recebido (ou o histórico foi limpo). */
     var ultimoAcesso: Long,
     var favorito: Boolean,
-    var pastaId: String?,
 ) {
     fun paraJson(): JSONObject = JSONObject()
         .put("id", id)
@@ -30,7 +30,6 @@ data class Documento(
         .put("adicionadoEm", adicionadoEm)
         .put("ultimoAcesso", ultimoAcesso)
         .put("favorito", favorito)
-        .put("pastaId", pastaId ?: JSONObject.NULL)
 
     companion object {
         fun deJson(o: JSONObject) = Documento(
@@ -42,16 +41,23 @@ data class Documento(
             adicionadoEm = o.getLong("adicionadoEm"),
             ultimoAcesso = o.getLong("ultimoAcesso"),
             favorito = o.getBoolean("favorito"),
-            pastaId = if (o.isNull("pastaId")) null else o.getString("pastaId"),
         )
     }
 }
 
-data class Pasta(val id: String, val nome: String) {
-    fun paraJson(): JSONObject = JSONObject().put("id", id).put("nome", nome)
+enum class Ordem(val rotulo: String) {
+    NOME("Nome"),
+    DATA("Data"),
+    TAMANHO("Tamanho"),
+    TIPO("Tipo");
 
-    companion object {
-        fun deJson(o: JSONObject) = Pasta(o.getString("id"), o.getString("nome"))
+    fun proxima(): Ordem = entries[(ordinal + 1) % entries.size]
+
+    fun ordenar(docs: List<Documento>): List<Documento> = when (this) {
+        NOME -> docs.sortedBy { it.nome.lowercase() }
+        DATA -> docs.sortedByDescending { it.ultimoAcesso.coerceAtLeast(it.adicionadoEm) }
+        TAMANHO -> docs.sortedByDescending { it.tamanho }
+        TIPO -> docs.sortedWith(compareBy({ it.tipo }, { it.nome.lowercase() }))
     }
 }
 
@@ -62,7 +68,6 @@ data class Pasta(val id: String, val nome: String) {
 object Biblioteca {
     private lateinit var contexto: Context
     private val documentosSalvos = mutableListOf<Documento>()
-    private val pastasSalvas = mutableListOf<Pasta>()
 
     /** Carrega o índice salvo. Chamar uma vez, ao abrir o app. */
     fun iniciar(context: Context) {
@@ -70,22 +75,18 @@ object Biblioteca {
         carregar()
     }
 
-    fun todos(): List<Documento> = documentosSalvos.sortedByDescending { it.ultimoAcesso }
+    fun todos(): List<Documento> = documentosSalvos.toList()
 
-    fun favoritos(): List<Documento> = todos().filter { it.favorito }
+    /** Arquivos abertos ou recebidos, do mais recente para o mais antigo. */
+    fun recentes(): List<Documento> =
+        documentosSalvos.filter { it.ultimoAcesso > 0 }.sortedByDescending { it.ultimoAcesso }
 
-    fun daPasta(pastaId: String): List<Documento> = todos().filter { it.pastaId == pastaId }
-
-    fun pastas(): List<Pasta> = pastasSalvas.sortedBy { it.nome.lowercase() }
-
-    fun contarNaPasta(pastaId: String): Int = documentosSalvos.count { it.pastaId == pastaId }
-
-    fun pastaPorId(pastaId: String?): Pasta? = pastasSalvas.firstOrNull { it.id == pastaId }
+    fun favoritos(): List<Documento> = documentosSalvos.filter { it.favorito }
 
     fun arquivo(doc: Documento): File = File(pastaDeArquivos(), doc.arquivo)
 
     /**
-     * Copia o arquivo recebido para a biblioteca. Demora, então chamar em segundo plano.
+     * Copia um arquivo recebido ou escolhido para a biblioteca. Demora, então chamar em segundo plano.
      * Depois, adicionar o retorno com adicionar(), na thread principal.
      */
     fun importar(uri: Uri): Documento? {
@@ -125,8 +126,19 @@ object Biblioteca {
             adicionadoEm = agora,
             ultimoAcesso = agora,
             favorito = false,
-            pastaId = null,
         )
+    }
+
+    /** Guarda um arquivo gerado por uma ferramenta (ele é movido para a biblioteca). */
+    fun importarArquivo(origem: File, nome: String, tipo: String): Documento {
+        val id = UUID.randomUUID().toString()
+        val destino = File(pastaDeArquivos(), id + extensao(nome))
+        if (!origem.renameTo(destino)) {
+            origem.copyTo(destino, overwrite = true)
+            origem.delete()
+        }
+        val agora = System.currentTimeMillis()
+        return Documento(id, nome, destino.name, destino.length(), tipo, agora, agora, false)
     }
 
     fun adicionar(doc: Documento) {
@@ -144,9 +156,26 @@ object Biblioteca {
         salvar()
     }
 
-    fun mover(doc: Documento, pastaId: String?) {
-        doc.pastaId = pastaId
+    fun renomear(doc: Documento, novoNome: String) {
+        doc.nome = novoNome
         salvar()
+    }
+
+    /** Cria uma cópia do arquivo na biblioteca, com "cópia" no nome. */
+    fun duplicar(doc: Documento): Documento? {
+        val origem = arquivo(doc)
+        if (!origem.exists()) return null
+        val nome = "${doc.nome.substringBeforeLast('.', doc.nome)} cópia${extensao(doc.nome)}"
+        val id = UUID.randomUUID().toString()
+        val destino = File(pastaDeArquivos(), id + extensao(doc.nome))
+        return try {
+            origem.copyTo(destino)
+            val agora = System.currentTimeMillis()
+            Documento(id, nome, destino.name, destino.length(), doc.tipo, agora, agora, false).also { adicionar(it) }
+        } catch (e: IOException) {
+            destino.delete()
+            null
+        }
     }
 
     fun excluir(doc: Documento) {
@@ -155,17 +184,9 @@ object Biblioteca {
         salvar()
     }
 
-    fun criarPasta(nome: String): Pasta {
-        val pasta = Pasta(UUID.randomUUID().toString(), nome)
-        pastasSalvas.add(pasta)
-        salvar()
-        return pasta
-    }
-
-    /** Excluir a pasta não apaga os arquivos dela: eles voltam para "Sem pasta". */
-    fun excluirPasta(pasta: Pasta) {
-        documentosSalvos.filter { it.pastaId == pasta.id }.forEach { it.pastaId = null }
-        pastasSalvas.remove(pasta)
+    /** Apaga a lista de recentes. Os arquivos, favoritos e pastas continuam como estão. */
+    fun limparRecentes() {
+        documentosSalvos.forEach { it.ultimoAcesso = 0 }
         salvar()
     }
 
@@ -181,7 +202,6 @@ object Biblioteca {
     private fun salvar() {
         val json = JSONObject()
             .put("documentos", JSONArray(documentosSalvos.map { it.paraJson() }))
-            .put("pastas", JSONArray(pastasSalvas.map { it.paraJson() }))
         arquivoIndice().writeText(json.toString())
     }
 
@@ -189,16 +209,12 @@ object Biblioteca {
         val indice = arquivoIndice()
         if (!indice.exists()) return
         try {
-            val json = JSONObject(indice.readText())
-            val docs = json.getJSONArray("documentos")
+            val docs = JSONObject(indice.readText()).getJSONArray("documentos")
             for (i in 0 until docs.length()) documentosSalvos.add(Documento.deJson(docs.getJSONObject(i)))
-            val pastas = json.getJSONArray("pastas")
-            for (i in 0 until pastas.length()) pastasSalvas.add(Pasta.deJson(pastas.getJSONObject(i)))
         } catch (e: JSONException) {
             // Índice corrompido: guarda uma cópia para não perder nada e começa um novo.
             indice.renameTo(File(contexto.filesDir, "biblioteca.corrompido.json"))
             documentosSalvos.clear()
-            pastasSalvas.clear()
         }
     }
 }

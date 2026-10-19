@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Abre Tudo</string>
-    <string name="nova_pasta">Nova pasta</string>
-    <string name="temas">Temas</string>
-    <string name="adicionar_arquivos">Adicionar arquivos</string>
+    <string name="configuracoes">Configurações</string>
+    <string name="adicionar">Adicionar</string>
+    <string name="aba_inicio">Início</string>
+    <string name="aba_arquivos">Arquivos</string>
+    <string name="aba_favoritos">Favoritos</string>
+    <string name="aba_ferramentas">Ferramentas</string>
 </resources>
