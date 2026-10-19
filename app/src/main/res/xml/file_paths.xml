@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<paths>
-    <!-- Os arquivos da biblioteca ficam em filesDir/biblioteca/ (ver Biblioteca.kt). -->
-    <files-path name="biblioteca" path="biblioteca/" />
-</paths>
