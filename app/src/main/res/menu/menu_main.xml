@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/novaPasta"
+        android:showAsAction="never"
+        android:title="@string/nova_pasta" />
+    <item
+        android:id="@+id/temas"
+        android:showAsAction="never"
+        android:title="@string/temas" />
+</menu>
