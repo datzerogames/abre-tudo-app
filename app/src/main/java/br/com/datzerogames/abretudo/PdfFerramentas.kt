@@ -37,23 +37,25 @@ enum class Ferramenta(
     val pergunta: String?,
     val implementada: Boolean,
 ) {
+    // A ordem dos itens define a ordem dos grupos na aba Ferramentas.
     JUNTAR("Juntar PDF", "PDF", Entrada.PDF_VARIOS, null, true),
     DIVIDIR("Dividir PDF", "PDF", Entrada.PDF_UM, "Páginas a manter (ex: 1-3 ou 2,5)", true),
+    COMPRIMIR("Comprimir", "PDF", Entrada.PDF_UM, null, true),
     ORGANIZAR("Organizar páginas", "PDF", Entrada.PDF_UM, "Nova ordem das páginas (ex: 3,1,2)", true),
-    NUMERAR("Numerar páginas", "PDF", Entrada.PDF_UM, null, true),
-    MARCA("Marca d'água", "PDF", Entrada.PDF_UM, "Texto da marca d'água", true),
     SENHA("Senha", "PDF", Entrada.PDF_UM, "Senha para abrir o PDF", true),
-    COMPRIMIR("Comprimir para envio", "PDF", Entrada.PDF_UM, null, true),
-    FOTOS_PDF("Fotos em PDF", "PDF", Entrada.IMAGENS, null, true),
-    PDF_FOTOS("PDF em fotos", "PDF", Entrada.PDF_UM, null, true),
+    MARCA("Marca d'água", "PDF", Entrada.PDF_UM, "Texto da marca d'água", true),
+    NUMERAR("Numerar páginas", "PDF", Entrada.PDF_UM, null, true),
+    ASSINAR("Assinar", "PDF", Entrada.PDF_UM, null, false),
+    FORMULARIO("Preencher formulário", "PDF", Entrada.PDF_UM, null, false),
     ESCANEAR("Escanear", "Escanear e converter", Entrada.NENHUMA, null, false),
+    FOTOS_PDF("Fotos em PDF", "Escanear e converter", Entrada.IMAGENS, null, true),
+    PDF_FOTOS("PDF em fotos", "Escanear e converter", Entrada.PDF_UM, null, true),
     OCR("Copiar texto (OCR)", "Escanear e converter", Entrada.PDF_UM, null, false),
     BOLETO("Ler boleto", "Para o dia a dia", Entrada.PDF_UM, null, false),
-    ASSINAR("Assinar", "Para o dia a dia", Entrada.PDF_UM, null, false),
-    FORMULARIO("Preencher formulário", "Para o dia a dia", Entrada.PDF_UM, null, false),
+    COMPRIMIR_ENVIO("Comprimir para envio", "Para o dia a dia", Entrada.PDF_UM, null, true),
     RG_CPF("Juntar RG e CPF", "Para o dia a dia", Entrada.IMAGENS, null, false),
-    LER_VOZ("Ler em voz alta", "Leitura e idiomas", Entrada.PDF_UM, null, false),
     TRADUZIR("Traduzir", "Leitura e idiomas", Entrada.PDF_UM, null, false),
+    LER_VOZ("Ler em voz alta", "Leitura e idiomas", Entrada.PDF_UM, null, false),
 }
 
 /** Um arquivo produzido por uma ferramenta, ainda fora da biblioteca. */
@@ -111,7 +113,7 @@ object PdfFerramentas {
                     protegerComSenha(origem, arquivo, parametro.orEmpty())
                     listOf(Saida(arquivo, "${nomeBase(contexto, uris.first())} - protegido.pdf", "application/pdf"))
                 }
-                Ferramenta.COMPRIMIR -> {
+                Ferramenta.COMPRIMIR, Ferramenta.COMPRIMIR_ENVIO -> {
                     val origem = copiar(uris.first())
                     val arquivo = saida("comprimido.pdf")
                     comprimir(origem, arquivo)

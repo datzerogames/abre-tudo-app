@@ -5,24 +5,96 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.google.android.material.textfield.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingStart="16dp"
-        android:paddingTop="8dp"
+        android:paddingTop="16dp"
         android:paddingEnd="16dp"
-        app:startIconDrawable="@android:drawable/ic_menu_search">
+        android:paddingBottom="8dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/busca"
+        <View
+            android:layout_width="5dp"
+            android:layout_height="26dp"
+            android:background="@color/app_laranja"
+            android:id="@+id/barra" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:text="Pastas"
+            android:textColor="@color/app_texto"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/adicionarPasta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/pilula_fundo"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"
+            android:text="Adicionar"
+            android:textColor="@color/app_laranja"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/card_fundo"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nome do arquivo"
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:maxLines="1" />
+            android:text="Libere uma pasta (por exemplo Documentos ou uma pasta dentro de Download) para o app encontrar seus arquivos. Você pode remover quando quiser."
+            android:textColor="@color/app_texto"
+            android:textSize="15sp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/escolherPasta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/app_tile"
+            android:text="Escolher pasta"
+            android:textColor="@color/app_cartao"
+            android:textStyle="bold"
+            app:cornerRadius="50dp"
+            app:icon="@android:drawable/ic_menu_myplaces"
+            app:iconTint="@color/app_cartao" />
+
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:scrollbars="none">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/filtros"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            app:selectionRequired="true"
+            app:singleLine="true"
+            app:singleSelection="true" />
+
+    </HorizontalScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,7 +108,8 @@
             android:id="@+id/ordem"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/app_texto_secundario" />
 
         <TextView
             android:id="@+id/totalArquivos"
@@ -44,8 +117,17 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="end"
-            android:textAppearance="?attr/textAppearanceBodySmall"
-            android:textColor="?attr/colorOnSurfaceVariant" />
+            android:textColor="@color/app_texto_secundario"
+            android:textSize="14sp" />
+
+        <ImageButton
+            android:id="@+id/atualizar"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Atualizar"
+            android:src="@android:drawable/ic_menu_rotate"
+            app:tint="@color/app_texto_secundario" />
 
     </LinearLayout>
 
@@ -59,17 +141,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingBottom="144dp" />
+            android:paddingTop="6dp"
+            android:paddingBottom="120dp" />
 
-        <TextView
+        <include
             android:id="@+id/vazio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            layout="@layout/estado_vazio"
             android:layout_gravity="center"
-            android:gravity="center"
-            android:padding="32dp"
-            android:textAppearance="?attr/textAppearanceBodyLarge"
-            android:textColor="?attr/colorOnSurfaceVariant"
             android:visibility="gone" />
 
     </FrameLayout>

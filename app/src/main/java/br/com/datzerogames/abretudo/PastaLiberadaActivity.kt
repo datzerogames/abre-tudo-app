@@ -146,6 +146,7 @@ private class NavegacaoAdapter(
         holder.titulo.text = filho.name ?: "Sem nome"
         holder.subtitulo.text = if (filho.isDirectory) "Pasta" else Formatter.formatShortFileSize(contexto, filho.length())
         holder.favorito.visibility = View.GONE
+        holder.mais.visibility = View.GONE
         holder.itemView.setOnClickListener { aoClicar(filho) }
     }
 
@@ -154,5 +155,6 @@ private class NavegacaoAdapter(
         val titulo: TextView = view.findViewById(R.id.titulo)
         val subtitulo: TextView = view.findViewById(R.id.subtitulo)
         val favorito: ImageButton = view.findViewById(R.id.favorito)
+        val mais: ImageButton = view.findViewById(R.id.mais)
     }
 }

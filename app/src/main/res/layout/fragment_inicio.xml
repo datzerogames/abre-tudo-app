@@ -1,144 +1,332 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:paddingBottom="120dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingStart="16dp"
-        android:paddingTop="16dp"
-        android:paddingEnd="16dp">
+        android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="12dp"
-            android:contentDescription="Abre Tudo"
-            android:src="@drawable/logo_app" />
-
-        <TextView
-            android:layout_width="wrap_content"
+        <HorizontalScrollView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Olá!"
-            android:textAppearance="?attr/textAppearanceHeadlineSmall"
-            android:textColor="?attr/colorOnSurface" />
+            android:paddingStart="12dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="12dp"
+            android:scrollbars="none">
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="12dp"
-        android:text="Abra PDF, Word, Excel, fotos e muito mais"
-        android:textAppearance="?attr/textAppearanceBodyMedium"
-        android:textColor="?attr/colorOnSurfaceVariant" />
+                <LinearLayout
+                    android:id="@+id/atalhoEscanear"
+                    style="@style/Atalho_AbreTudo"
+                    android:layout_width="92dp"
+                    android:layout_height="100dp">
 
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none">
+                    <ImageView
+                        android:id="@+id/iconeEscanear"
+                        style="@style/Atalho_Icone_AbreTudo"
+                        android:src="@android:drawable/ic_menu_camera" />
+
+                    <TextView
+                        style="@style/Atalho_Rotulo_AbreTudo"
+                        android:text="Escanear" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/atalhoJuntar"
+                    style="@style/Atalho_AbreTudo"
+                    android:layout_width="92dp"
+                    android:layout_height="100dp">
+
+                    <ImageView
+                        android:id="@+id/iconeJuntar"
+                        style="@style/Atalho_Icone_AbreTudo"
+                        android:src="@android:drawable/ic_menu_sort_by_size" />
+
+                    <TextView
+                        style="@style/Atalho_Rotulo_AbreTudo"
+                        android:text="Juntar" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/atalhoComprimir"
+                    style="@style/Atalho_AbreTudo"
+                    android:layout_width="92dp"
+                    android:layout_height="100dp">
+
+                    <ImageView
+                        android:id="@+id/iconeComprimir"
+                        style="@style/Atalho_Icone_AbreTudo"
+                        android:src="@android:drawable/arrow_down_float" />
+
+                    <TextView
+                        style="@style/Atalho_Rotulo_AbreTudo"
+                        android:text="Comprimir" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/atalhoConverter"
+                    style="@style/Atalho_AbreTudo"
+                    android:layout_width="92dp"
+                    android:layout_height="100dp">
+
+                    <ImageView
+                        android:id="@+id/iconeConverter"
+                        style="@style/Atalho_Icone_AbreTudo"
+                        android:src="@android:drawable/ic_menu_rotate" />
+
+                    <TextView
+                        style="@style/Atalho_Rotulo_AbreTudo"
+                        android:text="Converter" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/atalhoAssinar"
+                    style="@style/Atalho_AbreTudo"
+                    android:layout_width="92dp"
+                    android:layout_height="100dp">
+
+                    <ImageView
+                        android:id="@+id/iconeAssinar"
+                        style="@style/Atalho_Icone_AbreTudo"
+                        android:src="@android:drawable/ic_menu_edit" />
+
+                    <TextView
+                        style="@style/Atalho_Rotulo_AbreTudo"
+                        android:text="Assinar" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </HorizontalScrollView>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/cartaoBoasVindas"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/hero_fundo"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp">
+            android:padding="22dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Olá!"
+                    android:textColor="#FFFFFF"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Abra PDF, Word, Excel, fotos e muito mais"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/atalhoJuntar"
-                style="@style/Widget.Material3.Button.TonalButton"
+                android:id="@+id/abrirArquivo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:text="Juntar PDF" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/atalhoDividir"
-                style="@style/Widget.Material3.Button.TonalButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:text="Dividir PDF" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/atalhoComprimir"
-                style="@style/Widget.Material3.Button.TonalButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:text="Comprimir" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/atalhoFotos"
-                style="@style/Widget.Material3.Button.TonalButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:text="Fotos em PDF" />
+                android:layout_marginStart="12dp"
+                android:backgroundTint="#FFFFFF"
+                android:text="Abrir"
+                android:textColor="@color/app_laranja"
+                android:textStyle="bold"
+                app:cornerRadius="50dp" />
 
         </LinearLayout>
-    </HorizontalScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="4dp">
-
-        <TextView
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Recentes"
-            android:textAppearance="?attr/textAppearanceTitleMedium"
-            android:textColor="?attr/colorPrimary" />
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/verTudo"
-            android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/card_fundo"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="14dp">
+
+                <FrameLayout
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:background="@drawable/tile_fundo">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="PDF"
+                        android:textColor="@color/app_tile_icone"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/contaPdf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/app_texto"
+                        android:textSize="26sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="PDFs"
+                        android:textColor="@color/app_texto_secundario" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/card_fundo"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="14dp">
+
+                <FrameLayout
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:background="@drawable/tile_fundo">
+
+                    <ImageView
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:layout_gravity="center"
+                        android:src="@android:drawable/ic_menu_agenda"
+                        app:tint="@color/app_tile_icone" />
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/contaDocumentos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/app_texto"
+                        android:textSize="26sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Documentos"
+                        android:textColor="@color/app_texto_secundario" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:padding="8dp"
-            android:text="Ver tudo"
-            android:textColor="?attr/colorPrimary" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingTop="24dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="10dp">
+
+            <View
+                android:layout_width="5dp"
+                android:layout_height="26dp"
+                android:background="@color/app_laranja"
+                android:id="@+id/barraRecentes" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:text="Recentes"
+                android:textColor="@color/app_texto"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/verTudo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/pilula_fundo"
+                android:paddingStart="16dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                android:text="Ver tudo"
+                android:textColor="@color/app_laranja"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lista"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
+
+            <include
+                android:id="@+id/vazio"
+                layout="@layout/estado_vazio"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+
+        </FrameLayout>
 
     </LinearLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/lista"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingBottom="144dp" />
-
-        <TextView
-            android:id="@+id/vazio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:padding="32dp"
-            android:textAppearance="?attr/textAppearanceBodyLarge"
-            android:textColor="?attr/colorOnSurfaceVariant"
-            android:visibility="gone" />
-
-    </FrameLayout>
-
-</LinearLayout>
+</androidx.core.widget.NestedScrollView>

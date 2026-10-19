@@ -9,13 +9,59 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:theme="@style/ThemeOverlay.Material3.Dark.ActionBar"
-            app:title="@string/app_name" />
+            android:layout_height="wrap_content"
+            android:background="@color/app_cartao"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="12dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="Abre Tudo"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/tituloTopo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:text="Abre Tudo"
+                android:textColor="@color/app_texto"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/buscar"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/circulo_fundo"
+                android:contentDescription="Buscar"
+                android:src="@android:drawable/ic_menu_search"
+                app:tint="@color/app_texto" />
+
+            <ImageButton
+                android:id="@+id/configuracoes"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/circulo_fundo"
+                android:contentDescription="Configurações"
+                android:src="@android:drawable/ic_menu_preferences"
+                app:tint="@color/app_texto" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/app_borda" />
 
         <FrameLayout
             android:id="@+id/container"
@@ -27,18 +73,23 @@
             android:id="@+id/nav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/app_fundo"
             app:menu="@menu/menu_nav" />
 
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/adicionar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:layout_gravity="bottom|end"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="88dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="96dp"
+        android:backgroundTint="@color/app_tile"
         android:contentDescription="@string/adicionar"
-        android:src="@android:drawable/ic_input_add" />
+        android:src="@android:drawable/ic_input_add"
+        app:tint="@color/app_tile_icone"
+        app:fabCustomSize="64dp"
+        app:maxImageSize="32dp" />
 
 </FrameLayout>

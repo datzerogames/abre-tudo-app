@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="app_fundo">#121212</color>
+    <color name="app_cartao">#1E1E1E</color>
+    <color name="app_borda">#3A3530</color>
+    <color name="app_texto">#F5F2EE</color>
+    <color name="app_texto_secundario">#B8B0A8</color>
+    <color name="app_tile">#F5F2EE</color>
+    <color name="app_tile_icone">#C2410C</color>
+    <color name="app_pilula">#3D2A20</color>
+    <color name="app_busca">#2A2622</color>
+    <color name="app_laranja">#FF6A3D</color>
+    <color name="app_laranja_claro">#FF8A4D</color>
+</resources>

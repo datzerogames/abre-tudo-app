@@ -2,13 +2,38 @@
 <resources>
 
     <!-- Base do app. A cor escolhida pelo usuário é aplicada por cima (ver Tema.kt). -->
-    <style name="Base_AbreTudo" parent="Theme.Material3.DayNight.NoActionBar" />
+    <style name="Base_AbreTudo" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/app_fundo</item>
+        <item name="colorSecondaryContainer">@color/app_pilula</item>
+        <item name="colorOnSecondaryContainer">@color/app_laranja</item>
+    </style>
 
     <!-- As 12 cores com nome. Cada uma troca só a cor principal; o modo claro/escuro vem do tema base. -->
+    <style name="Atalho_AbreTudo">
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/card_fundo</item>
+        <item name="android:layout_margin">4dp</item>
+    </style>
+
+    <style name="Atalho_Icone_AbreTudo">
+        <item name="android:layout_width">34dp</item>
+        <item name="android:layout_height">34dp</item>
+    </style>
+
+    <style name="Atalho_Rotulo_AbreTudo">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:textColor">@color/app_texto</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="Cor_TintaLaranja">
-        <item name="colorPrimary">#E8590C</item>
+        <item name="colorPrimary">#FF4303</item>
         <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorPrimaryContainer">#E8590C</item>
+        <item name="colorPrimaryContainer">#FF4303</item>
         <item name="colorOnPrimaryContainer">#FFFFFF</item>
     </style>
 

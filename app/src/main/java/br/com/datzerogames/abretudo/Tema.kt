@@ -19,7 +19,7 @@ object Tema {
     private const val CHAVE_MODO = "modo"
 
     val cores = listOf(
-        CorTema("Tinta e Laranja", "#E8590C", R.style.Cor_TintaLaranja),
+        CorTema("Tinta e Laranja", "#FF4303", R.style.Cor_TintaLaranja),
         CorTema("Caneta Azul", "#1E4D9B", R.style.Cor_CanetaAzul),
         CorTema("Carimbo Roxo", "#6B3FA0", R.style.Cor_CarimboRoxo),
         CorTema("Clipe Turquesa", "#17807E", R.style.Cor_ClipeTurquesa),
@@ -36,6 +36,13 @@ object Tema {
 
     fun corAtual(contexto: Context): Int =
         prefs(contexto).getInt(CHAVE_COR, 0).coerceIn(0, cores.lastIndex)
+
+    /** Cor principal da tela atual, já com o tema escolhido aplicado. */
+    fun corPrimaria(contexto: Context): Int {
+        val valor = android.util.TypedValue()
+        contexto.theme.resolveAttribute(androidx.appcompat.R.attr.colorPrimary, valor, true)
+        return valor.data
+    }
 
     fun definirCor(contexto: Context, indice: Int) {
         prefs(contexto).edit().putInt(CHAVE_COR, indice).apply()

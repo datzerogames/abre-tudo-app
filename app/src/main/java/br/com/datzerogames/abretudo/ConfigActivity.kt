@@ -1,8 +1,9 @@
 package br.com.datzerogames.abretudo
 
-import android.net.Uri
 import android.os.Bundle
-import android.util.TypedValue
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -28,7 +29,7 @@ class ConfigActivity : BaseActivity() {
         setContentView(R.layout.activity_config)
         setSupportActionBar(findViewById<MaterialToolbar>(R.id.toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        title = getString(R.string.configuracoes)
+        title = "Configurações"
         conteudo = findViewById(R.id.conteudo)
         montar()
     }
@@ -41,30 +42,18 @@ class ConfigActivity : BaseActivity() {
     /** Desenha de novo todas as linhas, para refletir as escolhas feitas. */
     private fun montar() {
         conteudo.removeAllViews()
-
-        titulo("Aparência")
-        linha("Tema de cores", Tema.cores[Tema.corAtual(this)].nome) { escolherTema() }
-        linha("Modo", rotuloModo(Tema.modo(this))) { escolherModo() }
-
-        titulo("Pastas liberadas")
         val pastas = PastasLiberadas.listar(this)
-        if (pastas.isEmpty()) {
-            linha("Nenhuma pasta liberada", "Libere uma pasta para o app encontrar seus arquivos.") {}
-        }
-        pastas.forEach { uri ->
-            val nome = DocumentFile.fromTreeUri(this, uri)?.name ?: "Pasta"
-            linha(nome, "Toque para remover o acesso") { confirmarRemoverPasta(uri, nome) }
-        }
-        linha("Liberar pasta", "Escolha uma pasta, por exemplo Documentos") {
-            liberarPasta.launch(null)
-        }
 
-        titulo("Dados")
-        linha("Limpar histórico", "Apaga a lista de recentes") { confirmarLimparHistorico() }
-
-        titulo("Sobre")
-        linha("Privacidade", "Seus arquivos não saem do aparelho") { mostrarPrivacidade() }
-        linha("Sobre o app", "Versão ${versao()}") { mostrarSobre() }
+        linha(android.R.drawable.ic_menu_gallery, "Tema de cores", Tema.cores[Tema.corAtual(this)].nome) { escolherTema() }
+        linha(android.R.drawable.ic_menu_view, "Claro ou escuro", rotuloModo(Tema.modo(this))) { escolherModo() }
+        linha(
+            android.R.drawable.ic_menu_myplaces,
+            "Pastas liberadas",
+            if (pastas.isEmpty()) "Nenhuma pasta liberada" else "${pastas.size} pasta(s) liberada(s)",
+        ) { gerenciarPastas() }
+        linha(android.R.drawable.ic_menu_delete, "Limpar histórico", "Apaga a lista de recentes") { confirmarLimparHistorico() }
+        linha(android.R.drawable.ic_lock_idle_lock, "Privacidade", "Seus arquivos não saem do aparelho") { mostrarPrivacidade() }
+        linha(android.R.drawable.ic_dialog_info, "Sobre o app", "Versão ${versao()}") { mostrarSobre() }
     }
 
     private fun escolherTema() {
@@ -83,7 +72,7 @@ class ConfigActivity : BaseActivity() {
     private fun escolherModo() {
         val opcoes = arrayOf("Sistema", "Claro", "Escuro")
         AlertDialog.Builder(this)
-            .setTitle("Modo")
+            .setTitle("Claro ou escuro")
             .setSingleChoiceItems(opcoes, Tema.modo(this)) { dialogo, escolhido ->
                 Tema.definirModo(this, escolhido)
                 dialogo.dismiss()
@@ -99,7 +88,24 @@ class ConfigActivity : BaseActivity() {
         else -> "Sistema"
     }
 
-    private fun confirmarRemoverPasta(uri: Uri, nome: String) {
+    /** Lista as pastas liberadas. Tocar em uma remove o acesso; a última opção libera outra. */
+    private fun gerenciarPastas() {
+        val pastas = PastasLiberadas.listar(this)
+        val nomes = pastas.map { DocumentFile.fromTreeUri(this, it)?.name ?: "Pasta" } + "Liberar nova pasta"
+        AlertDialog.Builder(this)
+            .setTitle("Pastas liberadas")
+            .setItems(nomes.toTypedArray()) { _, escolhido ->
+                if (escolhido == pastas.size) {
+                    liberarPasta.launch(null)
+                } else {
+                    confirmarRemoverPasta(pastas[escolhido], nomes[escolhido])
+                }
+            }
+            .setNegativeButton("Fechar", null)
+            .show()
+    }
+
+    private fun confirmarRemoverPasta(uri: android.net.Uri, nome: String) {
         AlertDialog.Builder(this)
             .setMessage("Remover acesso à pasta $nome? Os arquivos dentro dela não são apagados.")
             .setPositiveButton("Remover") { _, _ ->
@@ -148,44 +154,13 @@ class ConfigActivity : BaseActivity() {
 
     private fun versao(): String = packageManager.getPackageInfo(packageName, 0).versionName.orEmpty()
 
-    private fun titulo(texto: String) {
-        conteudo.addView(TextView(this).apply {
-            text = texto
-            setTextAppearance(com.google.android.material.R.style.TextAppearance_Material3_TitleSmall)
-            setTextColor(obterCorPrimaria())
-            setPadding(dp(16), dp(20), dp(16), dp(6))
-        })
+    /** Uma linha do estilo dos cartões: bloco preto com ícone, título, subtítulo e seta. */
+    private fun linha(icone: Int, titulo: String, subtitulo: String, aoClicar: () -> Unit) {
+        val view = LayoutInflater.from(this).inflate(R.layout.item_config, conteudo, false)
+        view.findViewById<ImageView>(R.id.icone).setImageResource(icone)
+        view.findViewById<TextView>(R.id.titulo).text = titulo
+        view.findViewById<TextView>(R.id.subtitulo).text = subtitulo
+        view.setOnClickListener { aoClicar() }
+        conteudo.addView(view)
     }
-
-    private fun linha(titulo: String, subtitulo: String, aoClicar: () -> Unit) {
-        val bloco = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(dp(16), dp(12), dp(16), dp(12))
-            setBackgroundResource(obterFundoSelecionavel())
-            setOnClickListener { aoClicar() }
-        }
-        bloco.addView(TextView(this).apply {
-            text = titulo
-            setTextAppearance(com.google.android.material.R.style.TextAppearance_Material3_BodyLarge)
-        })
-        bloco.addView(TextView(this).apply {
-            text = subtitulo
-            setTextAppearance(com.google.android.material.R.style.TextAppearance_Material3_BodySmall)
-        })
-        conteudo.addView(bloco)
-    }
-
-    private fun obterCorPrimaria(): Int {
-        val valor = TypedValue()
-        theme.resolveAttribute(androidx.appcompat.R.attr.colorPrimary, valor, true)
-        return valor.data
-    }
-
-    private fun obterFundoSelecionavel(): Int {
-        val valor = TypedValue()
-        theme.resolveAttribute(android.R.attr.selectableItemBackground, valor, true)
-        return valor.resourceId
-    }
-
-    private fun dp(valor: Int): Int = (valor * resources.displayMetrics.density).toInt()
 }

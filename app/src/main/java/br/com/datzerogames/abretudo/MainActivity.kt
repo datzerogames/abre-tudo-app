@@ -7,15 +7,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.InputType
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.IOException
@@ -29,6 +27,10 @@ interface Aba {
 class MainActivity : BaseActivity() {
     private lateinit var nav: BottomNavigationView
     private lateinit var adicionar: FloatingActionButton
+    private lateinit var tituloTopo: TextView
+
+    /** Texto digitado na busca do topo. A aba Arquivos filtra por ele. */
+    var termoBusca = ""
 
     private var ferramentaPendente: Ferramenta? = null
     private var parametroPendente: String? = null
@@ -57,16 +59,20 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(findViewById<MaterialToolbar>(R.id.toolbar))
 
         nav = findViewById(R.id.nav)
         adicionar = findViewById(R.id.adicionar)
+        tituloTopo = findViewById(R.id.tituloTopo)
 
         nav.setOnItemSelectedListener {
             mostrarAba(it.itemId)
             true
         }
         adicionar.setOnClickListener { menuAdicionar() }
+        findViewById<View>(R.id.buscar).setOnClickListener { buscar() }
+        findViewById<View>(R.id.configuracoes).setOnClickListener {
+            startActivity(Intent(this, ConfigActivity::class.java))
+        }
 
         if (savedInstanceState == null) {
             nav.selectedItemId = R.id.nav_inicio
@@ -86,31 +92,43 @@ class MainActivity : BaseActivity() {
         atualizarAba()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        R.id.configuracoes -> {
-            startActivity(Intent(this, ConfigActivity::class.java))
-            true
-        }
-        else -> super.onOptionsItemSelected(item)
-    }
-
     /** Mostra uma das abas. Chamado pela barra de navegação e pelos atalhos da tela Início. */
     fun mostrarAba(id: Int) {
-        val fragmento: Fragment = when (id) {
-            R.id.nav_arquivos -> ArquivosFragment()
-            R.id.nav_favoritos -> FavoritosFragment()
-            R.id.nav_ferramentas -> FerramentasFragment()
-            else -> InicioFragment()
+        val (fragmento, titulo) = when (id) {
+            R.id.nav_arquivos -> ArquivosFragment() to "Arquivos"
+            R.id.nav_favoritos -> FavoritosFragment() to "Favoritos"
+            R.id.nav_ferramentas -> FerramentasFragment() to "Ferramentas"
+            else -> InicioFragment() to "Abre Tudo"
         }
         supportFragmentManager.beginTransaction().replace(R.id.container, fragmento).commit()
+        tituloTopo.text = titulo
         // O botão de adicionar só aparece nas abas em que faz sentido.
         adicionar.visibility = if (id == R.id.nav_favoritos || id == R.id.nav_ferramentas) View.GONE else View.VISIBLE
     }
+
+    /** Pede um texto e leva para a aba Arquivos filtrada por ele. */
+    private fun buscar() {
+        val campo = EditText(this).apply {
+            hint = "Nome do arquivo"
+            setText(termoBusca)
+            inputType = InputType.TYPE_CLASS_TEXT
+            val margem = (16 * resources.displayMetrics.density).toInt()
+            setPadding(margem, margem, margem, 0)
+        }
+        AlertDialog.Builder(this)
+            .setTitle("Buscar")
+            .setView(campo)
+            .setPositiveButton("Buscar") { _, _ ->
+                termoBusca = campo.text.toString().trim()
+                irPara(R.id.nav_arquivos)
+                atualizarAba()
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    /** Abre o seletor de arquivos, como o botão "Abrir" da tela Início. */
+    fun abrirArquivo() = abrirArquivos.launch(arrayOf("*/*"))
 
     /** Troca de aba pelo código, como o atalho "Ver tudo" da tela Início. */
     fun irPara(id: Int) {
